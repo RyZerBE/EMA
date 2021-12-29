@@ -1,0 +1,6 @@
+name: EMA
+api: 3.3.0
+website: discord.ryzer.be
+version: 1.0
+description: EMA Test for RyZerBE
+main: ryzerbe\ema\Loader
