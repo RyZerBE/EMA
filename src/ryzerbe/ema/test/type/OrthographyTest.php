@@ -8,16 +8,18 @@ use pocketmine\utils\TextFormat;
 use ryzerbe\core\util\discord\DiscordMessage;
 use ryzerbe\core\util\discord\embed\DiscordEmbed;
 use ryzerbe\core\util\discord\embed\options\EmbedField;
+use ryzerbe\ema\form\skill\SkillTestInfo;
 use ryzerbe\ema\player\EMAPlayer;
 use ryzerbe\ema\test\EMATest;
+use ryzerbe\ema\test\EMATestManager;
 use function array_keys;
 use function count;
 
 class OrthographyTest extends EMATest {
 
     private array $sentences = [
-        "DIE DEUTSCHE RECHDSCHRAIPUNG IST BEI MANCHEN PERSOHNEN KATERSTROFE" => "Die deutsche Rechtschreibung ist bei manchen Personen katastrophe."
-    ];
+        "DIE DEUTSCHE RECHDSCHRAIPUNG IST KATERSTROFE" => "Die deutsche Rechtschreibung ist Katastrophe."
+    ]; //todo: add sentences
 
     public function onStart(EMAPlayer $player): void{
         $sentences = $this->sentences;
@@ -26,6 +28,9 @@ class OrthographyTest extends EMATest {
                 $player->kick();
                 return;
             }
+
+            $emaPlayer = EMATestManager::getInstance()->getPlayer($player);
+            if($emaPlayer === null) return;
 
             $rightSentence = 0;
             foreach(array_keys($sentences) as $sentence) {
@@ -41,6 +46,8 @@ class OrthographyTest extends EMATest {
             $embed->addField(new EmbedField("Correct Sentences", $rightSentence."/".count($this->sentences), true));
             $message->addEmbed($embed);
             $message->send();
+
+            SkillTestInfo::onOpen($player);
         });
 
         $form->setTitle(TextFormat::GOLD."Orthographie Test");

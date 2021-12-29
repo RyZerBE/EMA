@@ -1,6 +1,6 @@
 <?php
 
-namespace ryzerbe\ema\form;
+namespace ryzerbe\ema\form\orthography;
 
 use jojoe77777\FormAPI\SimpleForm;
 use pocketmine\Player;
@@ -20,19 +20,20 @@ class OrthographyTestInfo {
         });
 
         $form->setTitle(TextFormat::GOLD."Orthographie Test");
-        $form->setContent(implode("\n".TextFormat::WHITE, [
+        $form->setContent(implode("\n".TextFormat::RESET.TextFormat::WHITE, [
             "Wir starten mit der Testung deiner Deutschfähigkeiten.",
             "Als Staff ist es wichtig, eine ordentliche Orthographie zu besitzen.",
             "",
             "§c§lErklärung:",
             "",
-            "Du erhältst gleich ein UI, in dem Sätze vorgegeben sind. Diese Sätze sind allerdings falsch geschrieben und Deine Aufgabe ist es, die Sätze korrigiert in das Feld eintragen.",
+            "Du erhältst gleich ein UI, in dem Sätze vorgegeben sind. Diese Sätze sind allerdings falsch geschrieben und Deine Aufgabe ist es, die Sätze korrigiert in das Feld einzutragen.",
             "",
             "§f§lBeispiel:",
             "",
             "ICH BIN EIN GUTHER SUPPORTER DEN ICH HAPE EINE ORDENTLICHE ORTHOGRAPI",
             "",
             "Du müsstest den Satz jetzt korrigiert so eintragen:",
+            "",
             "§aRICHTIG: §fIch bin ein guter Staff, denn ich habe eine ordentliche Orthographie.",
             "",
             "Alles verstanden? Wenn ja, dann atme noch einmal durch und Let's Go!"

@@ -6,6 +6,7 @@ use jojoe77777\FormAPI\SimpleForm;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat;
 use ryzerbe\core\RyZerBE;
+use ryzerbe\ema\form\orthography\OrthographyTestInfo;
 use ryzerbe\ema\player\EMAPlayer;
 use ryzerbe\ema\test\EMATestManager;
 use function implode;
@@ -14,13 +15,18 @@ class TestInfo {
 
     public static function onOpen(Player $player){
         $form = new SimpleForm(function(Player $player, $data): void{
-            $emaPlayer = new EMAPlayer($player);
-            EMATestManager::getInstance()->addPlayer($emaPlayer);
-            OrthographyTestInfo::onOpen($player);
+            $emaPlayer = EMATestManager::getInstance()->getPlayer($player);
+            if($emaPlayer === null) {
+                $emaPlayer = new EMAPlayer($player);
+                EMATestManager::getInstance()->addPlayer($emaPlayer);
+                OrthographyTestInfo::onOpen($player);
+            }else {
+                $emaPlayer->startTest($emaPlayer->getActualTest());
+            }
         });
 
         $form->setTitle(TextFormat::BLUE."Staff EMA");
-        $form->setContent(implode("\n".TextFormat::WHITE, [
+        $form->setContent(implode("\n".TextFormat::RESET.TextFormat::WHITE, [
             "Willkommen im Staff Auswahlverfahren auf dem ".RyZerBE::PREFIX.TextFormat::YELLOW."Network",
             "",
             "In diesem Test wirst du gründlich unter die Lupe genommen. Dieser Auswahltest wurde entwickelt, da sich viele für den Staff Rang bewerben und wir nur die Besten brauchen!",
@@ -29,7 +35,7 @@ class TestInfo {
             TextFormat::DARK_GRAY."» ".TextFormat::GREEN."Orthographie Test",
             TextFormat::DARK_GRAY."» ".TextFormat::GREEN."Fähigkeitstest",
             "",
-            "Der Auswahltest hat §c§lkein K.O System§r§f. Das bedeutet, du durchläufst §aalle Testabschnitte§f, obwohl du es vielleicht §cnicht bestanden §fhast.",
+            "Der Auswahltest hat §c§lkein K.O System§r§f. Das bedeutet, du durchläufst §aalle Testabschnitte§f, obwohl du §cein Testabschnitt §fvielleicht §cnicht bestanden §fhast.",
             "Du erhältst bei §ajedem Testabschnitt §feine §aErklärung§f, also keine Sorge! Sobald du die §eErklärung wegklickst, startet der Test§c!",
             "",
             "§c§lEs sind keine Hilfsmittel erlaubt! Die Benutzung von Hilfsmitteln führen zum PERMANENTEN Auschluss unseres Teams!",
